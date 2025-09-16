@@ -3,14 +3,13 @@ import requests
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
+import os
 
-# 🔑 Keys
-SERPAPI_KEY = "00d6ecc02d20c5906f837e3fb41285b029bad6fd36463ab6d8c70918b9df6234"
-MISTRAL_API_KEY = "9PDH3aipDWdurbfFlJmNioY9XKhNTndM"
-
-# --- Mailjet API Credentials (hard-coded) ---
-MAILJET_API_KEY = "9ab914ea1fa031e4c6d0501815d8ffdb"
-MAILJET_SECRET_KEY = "db45ca37e16282220cb1db66d50ae4e6"
+# Keys
+SERPAPI_KEY = os.environ.get("SERPAPI_KEY")
+MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY")
+MAILJET_API_KEY = os.environ.get("MAILJET_API_KEY")
+MAILJET_SECRET_KEY = os.environ.get("MAILJET_SECRET_KEY")
 
 def send_email(subject, body, to_email,
                smtp_server="in-v3.mailjet.com", smtp_port=587):
@@ -133,4 +132,5 @@ with gr.Blocks() as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    demo.launch(server_name="0.0.0.0", server_port=port)
